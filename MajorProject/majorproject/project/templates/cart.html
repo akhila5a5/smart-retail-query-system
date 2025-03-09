@@ -1,0 +1,199 @@
+{% extends 'home.html' %}
+{% block content %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Cart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .containr {
+      width: 90%;
+      margin: auto;
+      padding: 20px;
+      margin-top: 100px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .cart-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .cart-table th,
+    .cart-table td {
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .cart-table th {
+      background-color: #f8f9fa;
+      font-weight: bold;
+    }
+
+    .cart-table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .cart-total {
+      text-align: right;
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+
+    .cart-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .remove-btn {
+      background-color: #dc3545;
+    }
+
+    .remove-btn:hover {
+      background-color: #c82333;
+    }
+
+    .buy-btn {
+      background-color: #28a745;
+    }
+
+    .buy-btn:hover {
+      background-color: #218838;
+    }
+
+    .btn.disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .product-image {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+    }
+
+    .quantity-select {
+      width: 60px;
+      padding: 5px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .cart-table th, .cart-table td {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      .containr {
+        width: 100%;
+        padding: 10px;
+      }
+
+      .cart-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        margin: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="containr">
+    {% if messages %}
+            {% for message in messages %}
+            <center><p class="alert alert-success" >{{ message }}</p></center>
+            {% endfor %}
+        {% endif %}
+    <h2>Your Cart</h2>
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Product Image</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Brand</th>
+            <th>Quantity</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+
+            {% if cart %}
+            {% for i in cart %}
+              <form action="{% url 'buyproduct' i.id %}" method="POST">
+                {% csrf_token %}
+                <tr>
+                  <td><img src="/{{ i.product.image }}" class="product-image" alt="{{ i.product.name }}"></td>
+                  <td>{{ i.product.name }}</td>
+                  <td>Rs {{ i.product.price }}</td>
+                  <td>{{ i.product.brand }}</td>
+                  <td>
+                    <input type="number" name="qty" class="quantity-select" value="1" min="1" required>
+                  </td>
+                  <td>
+                    <!-- Remove Button -->
+                    <a href="{% url 'removefromcart' i.id %}">
+                      <button type="button" class="btn remove-btn">Remove</button>
+                    </a>
+                    <!-- Buy Button -->
+                    <button type="submit" class="btn buy-btn">Buy</button>
+                  </td>
+                </tr>
+              </form>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="6">No Items Added.</td>
+            </tr>
+          {% endif %}
+          
+         
+        </tbody>
+      </table>
+
+      <!-- <div class="cart-total">
+        <strong>Total: $85.00</strong>
+      </div> -->
+
+      <div class="cart-buttons">
+        <a href="{% url 'products' %}" class="btn">Continue Shopping</a>
+        <!-- <button type="submit" class="btn">Update Cart</button>
+        <a href="#" class="btn">Proceed to Checkout</a> -->
+      </div>
+  </div>
+
+</body>
+{% endblock %}

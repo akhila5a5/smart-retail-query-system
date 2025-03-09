@@ -1,0 +1,83 @@
+{% extends "home.html" %}
+{% block content %}
+
+
+<link rel="stylesheet" type="text/css" href="/static/styles/single_styles.css">
+	<div class="container single_product_container">
+		<div class="row">
+			<div class="col">
+
+				<!-- Breadcrumbs -->
+
+			
+
+			</div>
+		</div>
+		{% for i in products %}
+
+		<div class="row">
+			<div class="col-lg-7">
+				<div class="single_product_pics">
+					<div class="row">
+						
+						<div class="col-lg-9 image_col order-lg-2 order-1">
+							<div class="single_product_image">
+								<div class="single_product_image_background" style="background-image:url(/{{i.image}})"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-5" style="margin-left: -150px;">
+				<div class="product_details">
+					<div class="product_details_title">
+						<h2>{{i.name}}</h2>
+						<p>{{i.description}}</p>
+					</div>
+					<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
+						<span class="ti-truck"></span><span>free delivery</span>
+					</div>
+					<!-- <div class="original_price">$629.99</div> -->
+					<div class="product_price">Price : RS {{i.price}}</div>
+					<ul class="star_rating">
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+					</ul>
+				</div>
+					<h4>Brand : {{i.brand}}</h4>
+
+					<!-- <div class="product_color">
+						<span>Select Color:</span>
+						<ul>
+							<li style="background: #e54e5d"></li>
+							<li style="background: #252525"></li>
+							<li style="background: #60b3f3"></li>
+						</ul>
+					</div> -->
+					<div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
+						<!-- <span>Quantity:</span>
+						<div class="quantity_selector">
+							<span class="minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
+							<span id="quantity_value">1</span>
+							<span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
+						</div> -->
+						{% if login == 'user' %}
+						<div class=""><a href="{% url 'addtocart' i.id %}" class="add-cart-btn"style="background-color: #db5246;
+
+							padding: 10px;
+							border-radius: 5px; color: white; margin: 10px">add to cart</a></div>
+							{% endif %}
+						<!-- <div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+
+	</div>
+</div>
+
+	{% endblock  %}

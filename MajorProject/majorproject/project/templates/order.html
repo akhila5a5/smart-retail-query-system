@@ -1,0 +1,206 @@
+{% extends "home.html" %}
+{% block content %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Make Payment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .containr {
+      width: 90%;
+      max-width: 1200px;
+      margin: 100px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      font-size: 28px;
+      margin-bottom: 40px;
+    }
+
+    h3 {
+      color: #333;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .order-details {
+      margin-bottom: 30px;
+    }
+
+    .order-details input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    .order-details input[readonly] {
+      background-color: #e9ecef;
+    }
+
+    .order-details label {
+      font-weight: bold;
+    }
+
+    .payment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .payment-form label {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .payment-form input {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .payment-form input[type="submit"] {
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .payment-form input[type="submit"]:hover {
+      background-color: #218838;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #007bff;
+      color: white;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 5px;
+      text-align: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-btn:hover {
+        color: #e9ecef;
+      background-color: #0056b3;
+    }
+
+    .flex-containr {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .flex-containr > div {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .flex-containr {
+        flex-direction: column;
+      }
+
+      .payment-form input[type="submit"], .back-btn {
+        width: 100%;
+      }
+
+      .containr {
+        width: 95%;
+        margin: 20px auto;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="containr">
+    <h1>Make Payment</h1>
+
+    <form action="{%  url 'order' id %}" method="POST">
+        {% csrf_token %}
+        
+        <!-- Product Details Section -->
+        <div class="order-details">
+          <h3>Order Details</h3>
+          <div class="flex-containr">
+            <div>
+              <label for="product-name">Product Name</label>
+              <input type="text" id="product-name" name="product_name" value="{{name}}" readonly>
+            </div>
+            <div>
+              <label for="product-price">Price</label>
+              <input type="text" id="product-price" name="product_price" value="RS {{price}}" readonly>
+            </div>
+          </div>
+      
+          <div class="flex-containr">
+            <div>
+              <label for="product-quantity">Quantity</label>
+              <input type="number" id="product-quantity" name="qty" value="{{qty}}" min="1" readonly>
+            </div>
+      
+            <div>
+              <label for="product-total">Total Price</label>
+              <input type="number" id="product-total" name="total" value="{{total}}" readonly>
+            </div>
+          </div>
+       
+        
+        <!-- Payment Details Section -->
+        <h3>Payment Information</h3>
+        <div class="flex-containr">
+          <div>
+            <label for="cardholder-name">Card Holder's Name</label>
+            <input type="text" id="cardholder-name" name="name" placeholder="Enter Card Holder's Name" required>
+          </div>
+          
+          <div>
+            <label for="card-number">Card Number</label>
+            <input type="text" id="card-number" name="cardnumber" placeholder="Enter Card Number" maxlength="16" required>
+          </div>
+        </div>
+      
+        <div class="flex-containr">
+          <div>
+            <label for="exp-date">Expiration Date (MM/YY)</label>
+            <input type="text" id="exp-date" name="expdate" placeholder="MM/YY" required>
+          </div>
+      
+          <div>
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" name="cvv" maxlength="3" placeholder="Enter CVV" required>
+          </div>
+        </div>
+        <input type="submit" style="background-color: #28a745;" value="Pay Now">
+      </form>
+    </div>
+      
+    <a href="{% url 'cart' %}" class="back-btn">Go Back to Cart</a>
+  </div>
+
+</body>
+{% endblock %}

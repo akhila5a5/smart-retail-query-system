@@ -1,0 +1,175 @@
+{% extends "home.html" %}
+{% block content %}
+
+	<div class="container product_section_container">
+		<div class="row">
+			<div class="col product_section clearfix">
+
+				<!-- Breadcrumbs -->
+
+				<div class="newsletter">
+
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
+									<h4>Explore</h4>
+									<p>Here you can search the products.</p>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
+									{% if login == 'user' %}
+									<form action="{% url 'search' %}" >
+										{% else %}
+									<form action="{% url 'search_products' %}" >
+										{% endif %}
+									<input id="newsletter_email" type="text" placeholder="Search Here...." required="required" name="query" data-error="Valid email is required.">
+									<button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">Search</button>
+								</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Sidebar -->
+
+				<!-- Main Content -->
+				{% if messages %}
+				{% for message in messages %}
+				<center><p class="alert alert-success" >{{ message }}</p></center>
+				{% endfor %}
+			{% endif %}
+
+				<div class="main_content">
+
+					<!-- Products -->
+
+					<div class="products_iso">
+						<div class="row">
+							<div class="col">
+
+								<!-- Product Sorting -->
+
+								
+								<!-- Product Grid -->
+
+								<div class="product-grid">
+										{% if products %}
+									<!-- Product 1 -->
+									<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+										{% for i in products %}
+										<div class="product-item men" style="flex: 1 1 calc(25% - 20px); max-width: calc(25% - 20px); box-sizing: border-box;">
+										  <div class="product discount product_filter" style="border: 1px solid #ddd; padding: 10px; background: #fff; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+											<div class="product_image" style="text-align: center;">
+											  <a href="{% url 'productdetails' i.id %}"><img src="/{{i.image}}" alt="" style="width: 100%; height: auto; max-height: 200px; object-fit: contain;"></a>
+											</div>
+											<div class="favorite favorite_left"></div>
+											<div class="product_info" style="text-align: center; margin-top: 0px;">
+											  <h6 class="product_name" style="font-size: 18px; font-weight: bold; margin: 0;">
+												<a href="single.html" style="text-decoration: none; color: #333;">Product : {{i.name}}</a>
+											  </h6>
+											  <div class="product_price" style="font-size: 16px; color: #333; margin-top: 5px;">Brand : {{i.brand}}</div>
+
+											  <div class="product_price" style="font-size: 18px; font-weight: bold; color: #28a745; margin-top: 5px; background-color: #f9f9f9; padding: 5px 10px; border-radius: 5px; display: inline-block;">
+												RS {{i.price}}
+											  </div>
+																							<!-- <p>{{i.description}}</p> -->
+											</div>
+										  </div>
+										  {% if login == 'admin' %}
+
+										  <div class="button-containr" style="text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 10px;">
+											<!-- Add to Cart Button -->
+											
+										
+											<!-- Update Button -->
+											<a href="{% url 'update' i.id %}" class="btn update-cart" style="background: #ff8c00; color: #fff; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-size: 16px; font-weight: bold; text-align: center; transition: background 0.3s;">
+												Update 
+											</a>
+										
+											<!-- Delete Button -->
+											<a href="{% url 'delete' i.id %}" class="btn delete-cart" style="background: #dc3545; color: #fff; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-size: 16px; font-weight: bold; text-align: center; transition: background 0.3s;">
+												Delete
+											</a>
+										</div>
+										{% endif %}
+										
+										  {% if login == 'user' %}
+										  <div class="red_button add_to_cart_button" style="text-align: center; margin-top: 10px;">
+											<a href="{% url 'addtocart' i.id %}" style="display: inline-block; background: #ff0000; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Add to Cart</a>
+										  </div>
+										  {% endif %}
+										</div>
+											
+
+										{% endfor %}
+									  </div>
+									  {% else %}
+									  <center><p>No Data Found</p></center>
+									  {% endif %}
+									<!-- Product 2 -->
+
+									
+								<!-- Product Sorting -->
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Benefit -->
+<!-- 
+	<div class="benefit">
+		<div class="container" style="margin-top: 100px;">
+			<div class="row benefit_row">
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-truck" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>free shipping</h6>
+							<p>Suffered Alteration in Some Form</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-money" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>cach on delivery</h6>
+							<p>The Internet Tend To Repeat</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-undo" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>45 days return</h6>
+							<p>Making it Look Like Readable</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>opening all week</h6>
+							<p>8AM - 09PM</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+	<!-- Newsletter -->
+
+</div>
+
+	{% endblock %}

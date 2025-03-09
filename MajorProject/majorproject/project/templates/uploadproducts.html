@@ -1,0 +1,167 @@
+{% extends "home.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Product</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS for additional styling -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(120deg, #a3c1d4, #e6d293);
+
+        }
+
+        /* .container {
+            margin-top: 50px;
+        } */
+
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 130px;
+            margin-bottom: 100px;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-header h2 {
+            font-size: 2.5rem;
+            color: #007bff;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            box-shadow: none;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .form-footer p {
+            font-size: 0.9rem;
+        }
+
+        /* For responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="form-container">
+                    <div class="form-header">
+                        {% if messages %}
+                        {% for message in messages %}
+                        <p class="alert alert-success" >{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
+                        <h2>Upload Product</h2>
+                    </div>
+                    <form action="{% url 'uploadproducts' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <!-- Product Name -->
+                        <div class="form-group">
+                            <label for="productName" class="form-label">Product Name</label>
+                            <input type="text" id="productName" class="form-control" placeholder="Enter product name" name="prductname" required>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="form-group">
+                            <label for="productPrice" class="form-label">Price</label>
+                            <input type="number" id="productPrice" class="form-control" placeholder="Enter product price" name="price"  min="1" required>
+                        </div>
+
+                        <!-- Brand -->
+                        <div class="form-group">
+                            <label for="productBrand" class="form-label">Brand</label>
+                            <input type="text" id="productBrand" class="form-control" name="brand" placeholder="Enter product brand" required>
+                        </div>
+                        <!--color-->
+                        <div class="form-group">
+                            <label for="productcolor" class="form-label">Color</label>
+                            <input type="text" id="productcolor" class="form-control" name="color" placeholder="Enter color" required>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="form-group">
+                            <label for="productCategory" class="form-label">Category</label>
+                            <select id="productCategory" class="form-control" name="category" required>
+                                <option value="">Select Category</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Clothing">Clothing</option>
+                                <option value="Footwear">Footwear</option>
+                            </select>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label for="productDescription" class="form-label">Description</label>
+                            <textarea id="productDescription" class="form-control" rows="4" name="description" placeholder="Enter product description" required></textarea>
+                        </div>
+
+                        <!-- Product Image -->
+                        <div class="form-group">
+                            <label for="productImage" class="form-label">Product Image</label>
+                            <input type="file" id="productImage" class="form-control" accept="image/*" name="image" required>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn-submit">Upload Product</button>
+                    </form>
+
+                    <div class="form-footer">
+                        <p>By uploading, you agree to our <a href="#">Terms and Conditions</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+{% endblock %}

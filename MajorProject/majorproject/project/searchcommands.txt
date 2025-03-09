@@ -1,0 +1,19 @@
+
+List all products in the database.
+
+List all products in the Clothing category.
+
+List all products sorted by price from low to high.
+
+Find all products that have 'Shoes' in their name.
+
+x
+Find all products that have 'comfortable' in their description.
+
+Show me all products that have images in the ProductImages folder.
+
+List all products sorted by price from high to low.
+
+Show me all products whose names start with the letter 'S'.
+
+Find all Clothing products priced below ₹1000.
